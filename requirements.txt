@@ -1,0 +1,6 @@
+Django==1.8.6
+django-braces==1.8.1
+django-embed-video==1.0.0
+Pillow==2.9.0
+requests==2.13.0
+six==1.10.0

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+{{ object.title }}
+{% endblock %}
+{% block content %}
+<div class="container">
+      <div class="row">
+            <h3 class="col-md-12 bg-info text-center">
+                   {{ object.title }} - {{ module.title }}
+            </h3>
+      </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="contents">
+                        <ul class="list-group">
+                            <li class="list-group-item">{{ object.title }}</li>
+                            <!--<ul id="modules">-->
+                                {% for m in object.modules.all %}
+                                        <a data-id="{{ m.id }}" {% if m == module %}
+                                        class="list-group-item  list-group-item-info list-group-item-action" {% else %}
+                                           class="list-group-item list-group-item-action" {% endif %}  href="{% url "student_course_detail_module" object.id m.id %}">
+                                        <span class="order">{{ m.order|add:1 }} .
+                                        {{ m.title }}
+                                        </a>
+                                        </span>
+
+                                    {% empty %}
+                                    <li>No modules yet.</li>
+                                {% endfor %}
+                            </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="module">
+                        {% for content in module.contents.all %}
+                            {% with item=content.item %}
+                                <h2>{{ item.title }}</h2>
+                                {{ item.render }}
+                            {% endwith %}
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="col-md-3" style="background-color:black">
+                        Ads. Goes Here
+                    </div>
+                </div>
+             </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

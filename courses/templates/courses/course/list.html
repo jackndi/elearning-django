@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if subject %}
+        {{ subject.title }} courses
+    {% else %}
+     All courses
+    {% endif %}
+{% endblock %}
+{% block content %}
+
+  <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-3">Kimonda</h1>
+        <p class="lead">The great resource for learning for free.</p>
+      </div>
+    </div>
+
+    <h1>
+        {% if subject %}
+        <h2 class="text-center">
+        {{ subject.title }}</h2>
+        {% else %}
+        <h2 class="text-center" > All courses</h2>
+        {% endif %}
+    </h1>
+    <div class="contents">
+        <h3 class="col-md-12 bg-info text-center">Subjects</h3>
+
+
+
+        <ul class="nav nav-tabs">
+            {% for s in subjects %}
+                <li class="nav-item">
+                    <a {% if subject == s %}class="nav-link active" {% else %} class="nav-link" {% endif %} href="{% url "course_list_subject" s.slug %}">
+                    {{ s.title }}
+                    <span class="badge">{{ s.total_courses }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+
+    <div class="module">
+        {% for course in courses %}
+            {% with subject=course.subject %}
+            <div class="card ">
+              <div class="card-block">
+                    <h3 class="card-title"><a href="{% url "course_detail" course.slug %}">{{ course.title }}</a></h3>
+                    <p class="card-text">
+                    <a href="{% url "course_list_subject" subject.slug %}">{{ subject }}</a>.
+                     {{ course.total_modules }} modules.Instructor: {{ course.owner.get_full_name }}
+                    </p>
+                  <a href="{% url "course_detail" course.slug %}" class="btn btn-primary">Start Learning</a>
+              </div>
+            </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+{% endblock %}
